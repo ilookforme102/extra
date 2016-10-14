@@ -4,17 +4,14 @@
 // bring in necessary dependency
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('cors');
+
 //configure the express web server framework
 var app = express();
 app.use(bodyParser.json);
-//var posts = require('./routes/Post.js');
-//var cors = require('cors');
+app.use(cors());
 
-
-app.set('port', (process.env.PORT || 3000));
-//app.use(cors());
-//app.use('/', posts);
-//app.use('/', users);
+app.set('port', (process.env.PORT || 8888));
 var messages = [
     {
         username:"Dany",
@@ -31,7 +28,7 @@ var messages = [
         username:"Hana",
         message:"Yolo!!!!!!!"
     }
-]
+];
 app.get('/', function(req, res) {
     res.send("Hello world");
 });
@@ -40,7 +37,7 @@ app.get('/messages',function (req,res) {
 });
 app.post('/messages',function (req,res) {
     messages.push({
-        username: rep.body.username,
+        username: req.body.username,
         message: req.body.message
     });
     res.json(messages);
